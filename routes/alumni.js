@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const alumni = require('../models/alumni')
+const Alumni = require('../models/alumni')
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -11,6 +11,18 @@ router.get('/', function(req, res, next) {
     } else {
       res.json(alum)
     }
+  })
+});
+
+router.post('/', function(req, res, next) {
+  var alumni = new Alumni(req.body.newAlumni);
+  alumni.save(function(err, results){
+      if(err) {
+          console.log(req.body);
+          res.status(404);
+      } else {
+          res.status(201).send('Alumni Added')
+      }
   })
 });
 
