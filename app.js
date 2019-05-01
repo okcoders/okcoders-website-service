@@ -8,7 +8,6 @@ var config = require('./config/app.local.conf.js')
 
 var indexRouter = require('./routes/index');
 var alumniRouter = require('./routes/alumni');
-var addAlumniRouter = require('./routes/addAlumni');
 
 var app = express();
 

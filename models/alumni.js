@@ -6,6 +6,8 @@ const alumniSchema = new mongoose.Schema({
   email: String,
   linkedin: String,
   github: String,
+  bio: String,
+  birthday: String
 });
 
 const Alumni = mongoose.model('Alumni', alumniSchema);
