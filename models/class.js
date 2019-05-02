@@ -5,7 +5,7 @@ const classSchema = new mongoose.Schema({
     moduleNumber: Number,
     languageTags: Array,
     title: String,
-    dificulty: String
+    difficulty: String
 });
 
 const Class = mongoose.model('Class', classSchema);

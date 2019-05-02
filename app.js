@@ -8,7 +8,7 @@ var config = require('./config/app.local.conf.js')
 
 var indexRouter = require('./routes/index');
 var alumniRouter = require('./routes/alumni');
-var adminRouter = require('./routes/admin');
+var classRouter = require('./routes/class');
 
 var app = express();
 
@@ -44,6 +44,6 @@ db.once('open', function () {
 
 app.use('/', indexRouter);
 app.use('/alumni', alumniRouter);
-app.use('/admin', adminRouter);
+app.use('/class', classRouter);
 
 module.exports = app;
