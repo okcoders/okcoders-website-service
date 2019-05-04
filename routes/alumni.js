@@ -25,12 +25,12 @@ router.post('/', function(req, res, next) {
           res.status(201).send(newAlumni._id)
       }})
     });
-    
+
 router.get('/:id', function(req, res, next) {
   alumni.findById(req.params.id, (err, alum) => {
     if (err) {
       console.error("couldnt get alumn", err)
-      res.send('couldnt get alumni');
+      res.status(404).send("Couln't find a Bio for that Alumnus");
     } else {
       res.json(alum)
     }
