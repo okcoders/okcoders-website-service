@@ -25,13 +25,14 @@ router.post('/', function(req, res, next) {
           res.status(201).send(newAlumni._id)
       }})
     });
-router.get('/:firstName', function(req, res, next) {
-  alumni.find((err, alum) => {
+    
+router.get('/:id', function(req, res, next) {
+  alumni.findById(req.params.id, (err, alum) => {
     if (err) {
       console.error("couldnt get alumn", err)
       res.send('couldnt get alumni');
     } else {
-      res.render(alum)
+      res.json(alum)
     }
   })
 });
