@@ -18,10 +18,10 @@ router.post('/', function(req, res, next) {
   var newAlumni = new alumni(req.body.newAlumni);
   newAlumni.save(function(err, results){
       if(err) {
-          console.log(req.body);
-          res.status(404);
+          console.error("got an error for ", req.body, "error message: ", err)
+          res.status(500);
       } else {
-          res.status(201).send('Alumni Added')
+          res.status(201).send(newAlumni._id)
       }
   })
 });

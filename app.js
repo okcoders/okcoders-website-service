@@ -44,5 +44,4 @@ db.once('open', function() {
 app.use('/', indexRouter);
 app.use('/alumni', alumniRouter);
 
-
 module.exports = app;
