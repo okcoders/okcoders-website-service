@@ -16,7 +16,19 @@ router.get('/', function(req, res, next) {
 
 router.post('/', function(req, res, next) {
   var newAlumni = new alumni(req.body.newAlumni);
-  newAlumni.save(function(err, results){
+  var errors = [];
+
+  if (newAlumni.firstName === "" || newAlumni.lastName === "" ||
+    newAlumni.email === "" || newAlumni.linkedin === "" ||
+    newAlumni.github === "" || newAlumni.bio === "" ||
+    newAlumni.birthday === "") {
+    errors.push('Fill empty fields')
+  }
+  if(errors.length > 0) {
+    res.status(400).send(errors) 
+  }
+  else {
+    newAlumni.save(function(err, results){
       if(err) {
           console.error("got an error for ", req.body, "error message: ", err)
           res.status(500);
@@ -24,6 +36,8 @@ router.post('/', function(req, res, next) {
           res.status(201).send(newAlumni._id)
       }
   })
+  }
+
 });
 
 module.exports = router;
