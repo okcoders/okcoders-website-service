@@ -27,9 +27,22 @@ router.post('/', function (req, res, next) {
 });
 
 router.delete('/:id', function (req, res, next) {
-    const course = classes.findByIdAndDelete(req.params.id)
-        .then(course => res.sendStatus(204))
+    classes.findByIdAndDelete(req.params.id)
+        .then(() => res.sendStatus(204))
         .catch(err => res.status(400).send('Unable to delete.'));
+});
+
+router.put('/', function (req, res, next) {
+    const languageTags = req.body.tags.split(',').map(val => val.trim());
+    const record = { ...req.body, languageTags };
+    classes.findByIdAndUpdate(record._id, record, (err, clas) => {
+        if (err) {
+            console.error("couldnt get class", err)
+            res.send('couldnt get class');
+        } else {
+            res.json(clas)
+        }
+    })
 });
 
 module.exports = router;
