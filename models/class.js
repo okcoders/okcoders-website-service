@@ -1,9 +1,10 @@
 const mongoose = require("mongoose")
 
 const classSchema = new mongoose.Schema({
+    _id: Number,
     yearOfClass: Number,
     moduleNumber: Number,
-    languageTags: Array,
+    languages: [{type: Number, ref: 'Language'}],
     title: String,
     difficulty: String
 });

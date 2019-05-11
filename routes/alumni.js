@@ -1,11 +1,13 @@
 var express = require('express');
 var router = express.Router();
 const alumni = require('../models/alumni')
+require('../models/class')
+require('../models/language')
 
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  alumni.find((err, alum) => {
+  alumni.find().populate({path: 'classes', populate: {path: 'languages'}}).exec((err, alum) => {
     if (err) {
       console.error("couldnt get alumn", err)
       res.send('couldnt get alumni');

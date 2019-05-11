@@ -8,7 +8,8 @@ const alumniSchema = new mongoose.Schema({
   birthday: String,
   avatar: String,
   linkedin: String,
-  github: String
+  github: String,
+  classes: [{ type: Number, ref: 'Class' }]
 });
 
 const Alumni = mongoose.model('Alumni', alumniSchema);
