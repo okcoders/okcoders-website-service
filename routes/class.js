@@ -38,8 +38,7 @@ router.delete('/:id', function (req, res, next) {
 });
 
 router.put('/', function (req, res, next) {
-    const languageTags = req.body.tags.split(',').map(val => val.trim());
-    const record = { ...req.body, languageTags };
+    const record = req.body;
     classes.findByIdAndUpdate(record._id, record, (err, clas) => {
         if (err) {
             console.error("couldnt get class", err)
