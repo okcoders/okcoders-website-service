@@ -48,8 +48,8 @@ router.post('/', function(req, res, next) {
 
   function findEmptyField() {
     Object.keys(req.body.newAlumni).forEach((value) => {
-      console.log(value);
-      if (newAlumni[value] === "") {
+      console.log(newAlumni[value].length,value);
+      if (newAlumni[value]|| newAlumni[value].length <= 0) {
         errors.push(value)
       }
     });
@@ -64,7 +64,7 @@ router.post('/', function(req, res, next) {
     newAlumni.save(function (err, results) {
       if (err) {
         console.error("got an error for ", req.body, "error message: ", err)
-        res.status(500);
+        res.status(400);
       } else {
           res.status(201).send(newAlumni._id)
       }
