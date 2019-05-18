@@ -17,10 +17,7 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/', function (req, res, next) {
-    console.log(req.body)
-    // const languages = req.body.languages.map(l => +l);
     const newClass = new classes(req.body);
-    console.log(newClass);
     newClass.save((err, course) => {
         if (err) {
             console.error("couldnt get class", err)
