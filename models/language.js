@@ -1,7 +1,6 @@
 const mongoose = require("mongoose")
 
 const languageSchema = new mongoose.Schema({
-    _id: Number,
     language: String
 });
 

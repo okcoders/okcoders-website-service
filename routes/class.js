@@ -3,19 +3,24 @@ var router = express.Router();
 const classes = require('../models/class')
 
 router.get('/', function (req, res, next) {
-    classes.find((err, course) => {
-        if (err) {
-            console.error("couldnt get class", err)
-            res.send('couldnt get class');
-        } else {
-            res.json(course)
-        }
-    })
+    classes
+        .find()
+        .populate('languages')
+        .exec((err, course) => {
+            if (err) {
+                console.error("couldnt get class", err)
+                res.send('couldnt get class');
+            } else {
+                res.json(course)
+            }
+        })
 });
 
 router.post('/', function (req, res, next) {
-    const languageTags = req.body.tags.split(',').map(val => val.trim());
-    const newClass = new classes({ languageTags, ...req.body });
+    console.log(req.body)
+    // const languages = req.body.languages.map(l => +l);
+    const newClass = new classes(req.body);
+    console.log(newClass);
     newClass.save((err, course) => {
         if (err) {
             console.error("couldnt get class", err)
