@@ -3,19 +3,21 @@ var router = express.Router();
 const classes = require('../models/class')
 
 router.get('/', function (req, res, next) {
-    classes.find((err, course) => {
-        if (err) {
-            console.error("couldnt get class", err)
-            res.send('couldnt get class');
-        } else {
-            res.json(course)
-        }
-    })
+    classes
+        .find()
+        .populate('languages')
+        .exec((err, course) => {
+            if (err) {
+                console.error("couldnt get class", err)
+                res.send('couldnt get class');
+            } else {
+                res.json(course)
+            }
+        })
 });
 
 router.post('/', function (req, res, next) {
-    const languageTags = req.body.tags.split(',').map(val => val.trim());
-    const newClass = new classes({ languageTags, ...req.body });
+    const newClass = new classes(req.body);
     newClass.save((err, course) => {
         if (err) {
             console.error("couldnt get class", err)
@@ -33,8 +35,7 @@ router.delete('/:id', function (req, res, next) {
 });
 
 router.put('/', function (req, res, next) {
-    const languageTags = req.body.tags.split(',').map(val => val.trim());
-    const record = { ...req.body, languageTags };
+    const record = req.body;
     classes.findByIdAndUpdate(record._id, record, (err, clas) => {
         if (err) {
             console.error("couldnt get class", err)
