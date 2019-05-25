@@ -10,9 +10,8 @@ require('../models/language')
 router.get('/', function (req, res, next) {
   alumni
     .find()
-    // .populate({ path: 'classes', populate: { path: 'languages' } })
-    // .lean()
-    // .populate('classes')
+    .populate({ path: 'classes', populate: { path: 'languages' } })
+    .lean()
     .exec((err, alum) => {
       if (err) {
         console.error("couldnt get alumn", err)
@@ -48,7 +47,7 @@ router.post('/', function (req, res, next) {
 
   function findEmptyField() {
     Object.keys(req.body.newAlumni).forEach((value) => {
-      console.log(newAlumni[value].length,value);
+      console.log(newAlumni[value].length, value);
       if (!newAlumni[value] || newAlumni[value].length <= 0) {
         errors.push(value)
       }
