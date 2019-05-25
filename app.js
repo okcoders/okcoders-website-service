@@ -10,6 +10,7 @@ var indexRouter = require('./routes/index');
 var alumniRouter = require('./routes/alumni');
 var classRouter = require('./routes/class');
 var languageRouter = require('./routes/language');
+const userRouter = require('./routes/user');
 
 var app = express();
 
@@ -20,19 +21,19 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 const allowedOrigins = ['http://localhost:3000',
-  'https://okcoders.com'];
+	'https://okcoders.com'];
 app.use(cors({
-  origin: function (origin, callback) {
-    // allow requests with no origin
-    // (like mobile apps or curl requests)
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.indexOf(origin) === -1) {
-      var msg = 'The CORS policy for this site does not ' +
-        'allow access from the specified Origin.';
-      return callback(new Error(msg), false);
-    }
-    return callback(null, true);
-  }
+	origin: function (origin, callback) {
+		// allow requests with no origin
+		// (like mobile apps or curl requests)
+		if (!origin) return callback(null, true);
+		if (allowedOrigins.indexOf(origin) === -1) {
+			var msg = 'The CORS policy for this site does not ' +
+				'allow access from the specified Origin.';
+			return callback(new Error(msg), false);
+		}
+		return callback(null, true);
+	}
 }));
 
 mongoose.connect(config.dbUrl, { useNewUrlParser: true });
@@ -40,12 +41,13 @@ mongoose.connect(config.dbUrl, { useNewUrlParser: true });
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {
-  console.log("we are connected")
+	console.log("we are connected")
 });
 
 app.use('/', indexRouter);
 app.use('/alumni', alumniRouter);
 app.use('/class', classRouter);
 app.use('/language', languageRouter);
+app.use('/user', userRouter);
 
 module.exports = app;
