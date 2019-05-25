@@ -7,42 +7,42 @@ require('../models/language')
 
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
+router.get('/', function (req, res, next) {
   alumni
     .find()
-    .populate({path: 'classes', populate: {path: 'languages'}})
-    .lean()
+    // .populate({ path: 'classes', populate: { path: 'languages' } })
+    // .lean()
+    // .populate('classes')
     .exec((err, alum) => {
-        if (err) {
-          console.error("couldnt get alumn", err)
-          res.send('couldnt get alumni');
-        } else {
-          res.json(modifyAlumniResponse(alum))
-        }
-  })
+      if (err) {
+        console.error("couldnt get alumn", err)
+        res.status(500).send('couldnt get alumni');
+      } else {
+        res.json(modifyAlumniResponse(alum))
+      }
+    })
 });
 
 function modifyAlumniResponse(alum) {
-    return alum.map(o => {
-        if (o.classes) {
-            o.numberOfClasses = o.classes.length
-            o.languages = _(o.classes)
-                .map(c => c.languages)
-                .flatten()
-                .map(l => l.language)
-                .uniq()
-                .values()
-        } else {
-            o.numberOfClasses = 0
-            o.languages = []
-        }
-
-        delete o.classes
-        return o
-    })
+  return alum.map(o => {
+    if (o.classes) {
+      o.numberOfClasses = o.classes.length
+      o.languages = _(o.classes)
+        .map(c => c.languages)
+        .flatten()
+        .map(l => l.language)
+        .uniq()
+        .values()
+    } else {
+      o.numberOfClasses = 0
+      o.languages = []
+    }
+    delete o.classes
+    return o
+  })
 }
 
-router.post('/', function(req, res, next) {
+router.post('/', function (req, res, next) {
   var newAlumni = new alumni(req.body.newAlumni);
   var errors = [];
 
@@ -66,13 +66,13 @@ router.post('/', function(req, res, next) {
         console.error("got an error for ", req.body, "error message: ", err)
         res.status(400);
       } else {
-          res.status(201).send(newAlumni._id)
+        res.status(201).send(newAlumni._id)
       }
     })
   }
 });
 
-router.get('/:id', function(req, res, next) {
+router.get('/:id', function (req, res, next) {
   alumni.findById(req.params.id, (err, alum) => {
     if (err) {
       console.error("couldnt get alumn", err)
