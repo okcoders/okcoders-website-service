@@ -49,7 +49,7 @@ router.post('/', function(req, res, next) {
   function findEmptyField() {
     Object.keys(req.body.newAlumni).forEach((value) => {
       console.log(newAlumni[value].length,value);
-      if (newAlumni[value]|| newAlumni[value].length <= 0) {
+      if (!newAlumni[value] || newAlumni[value].length <= 0) {
         errors.push(value)
       }
     });
