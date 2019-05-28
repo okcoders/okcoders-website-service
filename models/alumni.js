@@ -1,6 +1,8 @@
 const mongoose = require("mongoose")
 const Schema = mongoose.Schema;
 
+// Modify alumni model to have a verified key
+
 const alumniSchema = new Schema({
   firstName: String,
   lastName: String,
