@@ -13,6 +13,7 @@ const alumniSchema = new Schema({
   linkedin: String,
   github: String,
   classes: [{ type: Schema.Types.ObjectId, ref: 'Class' }],
+  verified: Boolean,
 });
 
 const Alumni = mongoose.model('Alumni', alumniSchema);

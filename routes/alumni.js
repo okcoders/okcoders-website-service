@@ -10,6 +10,7 @@ require('../models/language')
 router.get('/', function (req, res, next) {
   alumni
     .find()
+    .where('verified', { $ne: true })
     .populate({ path: 'classes', populate: { path: 'languages' } })
     .lean()
     .exec((err, alum) => {
@@ -80,6 +81,25 @@ router.get('/:id', function (req, res, next) {
       res.json(alum)
     }
   })
+});
+
+router.put('/', function (req, res, next) {
+  const record = req.body;
+  alumni.findByIdAndUpdate(record._id, record, (err, alum) => {
+    if (err) {
+      console.error("couldnt get alumni", err)
+      res.send('couldnt get alumni');
+    } else {
+      console.log("success")
+      res.json(alum)
+    }
+  })
+});
+
+router.delete('/:id', function (req, res, next) {
+  alumni.findByIdAndDelete(req.params.id)
+    .then(() => res.sendStatus(204))
+    .catch(err => res.status(400).send('Unable to delete.'));
 });
 
 module.exports = router;
