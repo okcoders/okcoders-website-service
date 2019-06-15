@@ -8,7 +8,8 @@ const auth = require('../middleware/middleware')
 
 
 /* GET users listing. */
-router.get('/', auth, function(req, res, next) {
+router.get('/', function(req, res, next) {
+  console.log(req)
   alumni
     .find()
     .populate({path: 'classes', populate: {path: 'languages'}})
