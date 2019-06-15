@@ -8,9 +8,10 @@ require('../models/language')
 
 /* GET users listing. */
 router.get('/', function (req, res, next) {
+  var verified = (req.query.verified || 'true').toLowerCase() === 'true' ? true : { $ne: true }
   alumni
     .find()
-    .where('verified', { $ne: true })
+    .where('verified', verified)
     .populate({ path: 'classes', populate: { path: 'languages' } })
     .lean()
     .exec((err, alum) => {
