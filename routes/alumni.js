@@ -4,12 +4,10 @@ var _ = require('lodash')
 const alumni = require('../models/alumni')
 require('../models/class')
 require('../models/language')
-const auth = require('../middleware/middleware')
 
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  console.log(req)
   alumni
     .find()
     .populate({path: 'classes', populate: {path: 'languages'}})

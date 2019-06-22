@@ -15,7 +15,6 @@ router.post('/login', function (req, res, next) {
 			} else if (!matchedUser) {
 				res.status(404).send('screw off')
 			} else {
-				console.log(matchedUser)
 				const payload = { user: {id: matchedUser.toObject()._id }  }
 				const correctPassword = bc.compareSync(req.body.password, matchedUser.password)
 				if (correctPassword) {
