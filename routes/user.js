@@ -15,10 +15,10 @@ router.post('/login', function (req, res, next) {
 			} else if (!matchedUser) {
 				res.status(404).send('screw off')
 			} else {
-				console.log(matchedUser)
+				const payload = { user: {id: matchedUser.toObject()._id }  }
 				const correctPassword = bc.compareSync(req.body.password, matchedUser.password)
 				if (correctPassword) {
-					const token = jwt.sign(matchedUser.toObject(), 'shhhh', { expiresIn: '14d' })
+					const token = jwt.sign(payload, 'shhhh', { expiresIn: '14d' })
 					res.json({ token })
 				} else {
 					res.status(401).send('screw off')
