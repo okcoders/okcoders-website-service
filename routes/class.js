@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const classes = require('../models/class')
+const auth = require('../middleware/middleware')
 
 router.get('/', function (req, res, next) {
     classes
